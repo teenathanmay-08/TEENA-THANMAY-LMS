@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | TEENA THANMAY LMS</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+<nav class="navbar"><div class="container nav-inner">
+  <a class="brand" href="/">TEENA THANMAY<span>ONLINE LEARNING ACADEMY</span></a>
+  <div class="nav-links">
+    <a href="/">Home</a><a href="/courses">Courses</a>
+    <% if (user && user.role === 'student') { %><a href="/my-learning">My Learning</a><% } %>
+    <% if (user && user.role === 'admin') { %><a href="/admin/users">Users</a><a href="/admin/enrollments">Enrollments</a><% } %>
+    <% if (user && ['admin','instructor'].includes(user.role)) { %><a href="/admin/courses/new">Add Course</a><% } %>
+    <a href="/about">About</a>
+  </div>
+  <div class="nav-actions">
+    <% if (user) { %>
+      <a class="btn btn-light btn-small" href="/dashboard">Dashboard</a>
+      <form class="inline-form" action="/logout" method="POST"><button class="btn btn-outline btn-small">Logout</button></form>
+    <% } else { %>
+      <a class="btn btn-outline btn-small" href="/login">Sign in</a><a class="btn btn-small" href="/register">Join now</a>
+    <% } %>
+  </div>
+</div></nav>
+<main class="container">
+<% if (flash) { %><div class="alert <%= flash.type %>"><%= flash.message %></div><% } %>

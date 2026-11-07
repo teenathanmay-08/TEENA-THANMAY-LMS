@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<section class="page-layout"><div class="two-col">
+<div><img class="detail-image" src="<%= course.image_url || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000' %>" alt="<%= course.title %>">
+<div class="panel" style="margin-top:20px"><div class="eyebrow">Course overview</div><h1 class="page-title"><%= course.title %></h1><p class="muted"><%= course.description %></p><p class="meta">Instructor: <strong><%= course.instructor_name %></strong></p>
+<h3>Course lessons</h3><ul class="lesson-list"><% lessons.forEach(l => { %><li><div><strong><%= l.lesson_order %>. <%= l.title %></strong><div class="meta"><%= l.description || '' %></div>
+<% if (l.material_url) { %><div style="margin-top:7px"><a href="<%= l.material_url %>" target="_blank" rel="noopener">Open learning material ↗</a></div><% } %>
+</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="pill"><%= l.material_type %></span>
+<% if (user && user.role==='student' && enrolled) { %><form method="POST" action="/lessons/<%= l.lesson_id %>/complete"><button class="btn btn-small btn-light">Mark progress</button></form><% } %></div></li><% }) %></ul>
+<% if (!lessons.length) { %><p class="muted">Lessons will be added soon.</p><% } %>
+<% if (user && ['admin','instructor'].includes(user.role) && (user.role==='admin' || user.user_id===course.instructor_id)) { %><p style="margin-top:20px"><a class="btn btn-light" href="/courses/<%= course.course_id %>/lessons/new">＋ Add lesson</a> <a class="btn btn-outline" href="/admin/courses/<%= course.course_id %>/edit">Edit course</a></p><% } %>
+</div></div>
+<aside class="panel"><div class="eyebrow">Start learning</div><div class="price" style="font-size:30px;margin:12px 0">₹<%= Number(course.price).toLocaleString('en-IN') %></div><p class="muted">One-time course fee · Payment status is managed by the academy.</p>
+<% if (!user) { %><a class="btn" style="width:100%" href="/login">Sign in to enroll</a><% } else if (user.role==='student' && enrolled) { %><div class="alert">You are enrolled in this course.</div><a class="btn" style="width:100%" href="/my-learning">Go to my learning</a><% } else if (user.role==='student') { %><form method="POST" action="/courses/<%= course.course_id %>/enroll"><button class="btn" style="width:100%">Enroll now →</button></form><% } else { %><p class="role-note">Staff accounts manage course content and student enrollments.</p><% } %>
+<img class="detail-image" style="height:150px;margin-top:22px" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" alt="Classroom">
+</aside></div></section>
+<%- include('partials/footer') %>

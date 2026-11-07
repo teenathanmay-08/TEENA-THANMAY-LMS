@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<div class="form-card"><div class="eyebrow">Learning content</div><h1>Add a lesson</h1><p class="muted">Course: <strong><%= course.title %></strong></p>
+<form method="POST" enctype="multipart/form-data" action="/courses/<%= course.course_id %>/lessons">
+<div class="field"><label>Lesson title</label><input name="title" required placeholder="Lesson name"></div>
+<div class="field"><label>Description</label><textarea name="description" placeholder="What will this lesson cover?"></textarea></div>
+<div class="form-row"><div class="field"><label>Lesson order</label><input type="number" name="lesson_order" min="1" value="1"></div><div class="field"><label>Material type</label><select name="material_type"><option>notes</option><option>video</option><option>pdf</option><option>document</option><option>link</option></select></div></div>
+<div class="field"><label>Upload material (PDF, DOC, PPT, TXT, MP4, image; max 15 MB)</label><input type="file" name="material_file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.mp4,.webm,.png,.jpg,.jpeg"></div>
+<div class="field"><label>Or material URL</label><input name="material_url" placeholder="https://..."></div>
+<button class="btn">Save lesson</button> <a class="btn btn-light" href="/courses/<%= course.course_id %>">Cancel</a></form>
+<img class="detail-image" style="height:130px;margin-top:20px" src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=900" alt="Learning materials">
+</div><%- include('partials/footer') %>

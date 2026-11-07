@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<section class="page-hero"><div class="eyebrow">Find your next skill</div><h1 class="page-title">Explore courses</h1><p class="muted">Browse courses, compare fees and choose your learning path.</p>
+<form class="searchbar" method="GET" action="/courses"><input class="search-input" name="q" value="<%= q %>" placeholder="Search courses..."><button class="btn">Search</button></form></section>
+<section class="page-layout"><% if (user && ['admin','instructor'].includes(user.role)) { %><p><a class="btn" href="/admin/courses/new">＋ Add new course</a></p><% } %>
+<div class="grid"><% courses.forEach(c => { %><article class="course-card">
+<img src="<%= c.image_url || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900' %>" alt="<%= c.title %>">
+<div class="course-content"><span class="pill"><%= c.lesson_count %> lessons</span><h3><%= c.title %></h3><p><%= c.description %></p><div class="meta"><span><%= c.instructor_name %></span></div>
+<div class="course-bottom"><span class="price">₹<%= Number(c.price).toLocaleString('en-IN') %></span><a class="btn btn-small" href="/courses/<%= c.course_id %>">Details</a></div>
+<% if (user && ['admin','instructor'].includes(user.role) && (user.role==='admin' || user.user_id===c.instructor_id)) { %><p><a href="/admin/courses/<%= c.course_id %>/edit">Edit course</a> · <a href="/courses/<%= c.course_id %>/lessons/new">Add lesson</a></p><% } %>
+</div></article><% }) %></div>
+<% if (!courses.length) { %><div class="empty"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500" alt=""><h3>No courses found</h3><p>Try another search or add a new course.</p></div><% } %>
+</section>
+<%- include('partials/footer') %>

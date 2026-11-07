@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+<section class="hero"><div class="container hero-grid">
+  <div><div class="eyebrow">A smarter way to learn</div>
+    <h1>Grow your skills.<br><em>Shape your future.</em></h1>
+    <p>Explore practical online courses, learn from instructors and track every step of your learning journey — all in one place.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn" href="/courses">Explore courses →</a><a class="btn btn-light" href="/register">Create free account</a></div>
+    <div class="hero-stats"><div><strong>10+</strong><span>Expert courses</span></div><div><strong>4+</strong><span>Lessons per path</span></div><div><strong>Anytime</strong><span>Learn at your pace</span></div></div>
+  </div>
+  <div class="hero-image"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1100&q=85" onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1100&q=85'" alt="Students learning together"></div>
+</div></section>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Popular learning paths</div><h2>Explore our courses</h2><p class="muted">Choose a course and start building real-world skills.</p></div><a class="btn btn-light" href="/courses">View all courses →</a></div>
+<div class="grid">
+<% courses.forEach(c => { %><article class="course-card">
+  <img src="<%= c.image_url || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900' %>" alt="<%= c.title %>">
+  <div class="course-content"><span class="pill"><%= c.lesson_count %> lessons</span><h3><%= c.title %></h3><p><%= c.description %></p>
+    <div class="meta"><span>Instructor: <%= c.instructor_name %></span></div>
+    <div class="course-bottom"><span class="price">₹<%= Number(c.price).toLocaleString('en-IN') %></span><a class="btn btn-small" href="/courses/<%= c.course_id %>">View course</a></div>
+  </div></article><% }) %>
+</div></section>
+<section class="section"><div class="two-col"><div class="panel"><div class="eyebrow">Why learn with us</div><h2 class="page-title">Learning that moves with you</h2><p class="muted">Manage your courses, lessons, enrollments and learning progress from a simple dashboard.</p><ul><li>Structured lessons and learning materials</li><li>Progress tracking for every enrolled course</li><li>Flexible learning for students</li><li>Course and student management for staff</li></ul><a class="btn" href="/register">Start learning</a></div><img class="detail-image" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=85" alt="Study desk"></div></section>
+<%- include('partials/footer') %>

@@ -1,0 +1,6 @@
+<%- include('partials/header') %>
+<section class="page-hero"><div class="eyebrow">Student space</div><h1 class="page-title">My learning</h1><p class="muted">Track your enrolled courses and continue learning.</p></section>
+<section class="page-layout"><div class="grid">
+<% enrollments.forEach(e=>{ %><article class="course-card"><img src="<%= e.image_url || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900' %>" alt="<%= e.title %>"><div class="course-content"><h3><%= e.title %></h3><p><%= e.description %></p><div class="course-bottom"><span class="pill"><%= e.enrollment_status %></span><strong><%= e.progress %>%</strong></div><div class="progress" style="margin:12px 0"><span style="width:<%= e.progress %>%"></span></div><div class="meta">Payment: <%= e.payment_status %> · Fee ₹<%= Number(e.fee).toLocaleString('en-IN') %></div><a class="btn btn-small" style="margin-top:15px" href="/courses/<%= e.course_id %>">Open course</a></div></article><% }) %>
+</div><% if(!enrollments.length){ %><div class="empty"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500" alt=""><h3>Your learning journey starts here</h3><p>Enroll in a course to see it here.</p><a class="btn" href="/courses">Explore courses</a></div><% } %>
+</section><%- include('partials/footer') %>

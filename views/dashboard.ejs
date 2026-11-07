@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<section class="page-hero"><div class="eyebrow"><%= user.role %> workspace</div><h1 class="page-title">Welcome, <%= user.name %> 👋</h1><p class="muted">Here is your TEENA THANMAY learning dashboard.</p></section>
+<section class="page-layout">
+<% if (user.role==='admin') { %><div class="stats">
+<div class="stat-card"><small>Total students</small><strong><%= stats.students %></strong></div><div class="stat-card"><small>Instructors</small><strong><%= stats.instructors %></strong></div><div class="stat-card"><small>Courses</small><strong><%= stats.courses %></strong></div><div class="stat-card"><small>Enrollments</small><strong><%= stats.enrollments %></strong></div></div>
+<div class="stats"><div class="stat-card"><small>Paid enrollment fees</small><strong>₹<%= Number(stats.revenue).toLocaleString('en-IN') %></strong></div></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px"><a class="btn" href="/admin/users">Manage users</a><a class="btn btn-light" href="/admin/enrollments">Manage enrollments</a><a class="btn btn-outline" href="/admin/courses/new">Add course</a></div>
+<% } else if (user.role==='instructor') { %><div class="stats"><div class="stat-card"><small>My courses</small><strong><%= stats.courses %></strong></div><div class="stat-card"><small>Lessons</small><strong><%= stats.lessons %></strong></div><div class="stat-card"><small>Student enrollments</small><strong><%= stats.enrollments %></strong></div></div><a class="btn" href="/admin/courses/new">＋ Create course</a>
+<% } else { %><div class="stats"><div class="stat-card"><small>Enrolled courses</small><strong><%= stats.enrollments %></strong></div><div class="stat-card"><small>Completed courses</small><strong><%= stats.completed %></strong></div></div><a class="btn" href="/my-learning">Continue learning →</a><% } %>
+<div class="panel" style="margin-top:25px"><h3><%= user.role==='student'?'My enrolled courses':'Recent enrollments' %></h3>
+<% if (recent.length) { %><div class="table-wrap"><table class="table"><thead><tr><% if(user.role!=='student'){ %><th>Student</th><% } %><th>Course</th><th>Fee</th><th>Payment</th><th>Progress</th><% if(user.role==='student'){ %><th>Status</th><% } %></tr></thead><tbody>
+<% recent.forEach(r=>{ %><tr><% if(user.role!=='student'){ %><td><%= r.student_name %></td><% } %><td><%= r.course_title %></td><td>₹<%= Number(r.fee).toLocaleString('en-IN') %></td><td><span class="pill"><%= r.payment_status %></span></td><td><div class="progress"><span style="width:<%= r.progress %>%"></span></div><small><%= r.progress %>%</small></td><% if(user.role==='student'){ %><td><%= r.enrollment_status %></td><% } %></tr><% }) %>
+</tbody></table></div><% } else { %><p class="muted">No enrollment records yet.</p><% } %>
+</div><img class="detail-image" style="height:180px;margin-top:22px" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1100&q=80" alt="Team learning">
+</section>
+<%- include('partials/footer') %>

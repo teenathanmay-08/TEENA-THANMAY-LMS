@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<section class="page-hero"><div class="eyebrow">Administration</div><h1 class="page-title">Manage enrollments</h1><p class="muted">Register students, update fees, payment status and learning progress.</p></section>
+<section class="page-layout"><div class="two-col"><div class="panel"><h3>Create enrollment</h3><form method="POST" action="/admin/enrollments">
+<div class="field"><label>Student</label><select name="user_id" required><% students.forEach(s=>{ %><option value="<%= s.user_id %>"><%= s.name %></option><% }) %></select></div>
+<div class="field"><label>Course</label><select name="course_id" data-fee-course required><% courses.forEach(c=>{ %><option value="<%= c.course_id %>" data-price="<%= c.price %>"><%= c.title %> — ₹<%= Number(c.price).toLocaleString('en-IN') %></option><% }) %></select></div>
+<div class="field"><label>Fee (₹)</label><input name="fee" type="number" step="0.01" min="0" value="<%= courses[0]?.price||0 %>" required></div>
+<div class="field"><label>Payment status</label><select name="payment_status"><option>pending</option><option>paid</option><option>failed</option></select></div><button class="btn">Create enrollment</button></form></div>
+<img class="detail-image" style="height:290px" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1000" alt="Students in a class"></div>
+<div class="panel" style="margin-top:25px"><h3>All enrollments</h3><div class="table-wrap"><table class="table"><thead><tr><th>Student</th><th>Course</th><th>Fee</th><th>Payment</th><th>Progress</th><th>Status</th><th>Update</th></tr></thead><tbody>
+<% enrollments.forEach(e=>{ %><tr><td><%= e.student_name %></td><td><%= e.course_title %></td><td colspan="5"><form method="POST" action="/admin/enrollments/<%= e.enrollment_id %>/update" style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+<input name="fee" type="number" min="0" step=".01" value="<%= e.fee %>" style="width:90px;padding:7px;border:1px solid #ddd;border-radius:7px">
+<select name="payment_status" style="padding:7px;border:1px solid #ddd;border-radius:7px"><% ['pending','paid','failed'].forEach(x=>{ %><option <%= e.payment_status===x?'selected':'' %>><%= x %></option><% }) %></select>
+<input name="progress" type="number" min="0" max="100" value="<%= e.progress %>" style="width:65px;padding:7px;border:1px solid #ddd;border-radius:7px">
+<select name="enrollment_status" style="padding:7px;border:1px solid #ddd;border-radius:7px"><% ['active','completed','cancelled'].forEach(x=>{ %><option <%= e.enrollment_status===x?'selected':'' %>><%= x %></option><% }) %></select>
+<button class="btn btn-small">Save</button></form><form class="inline-form" method="POST" action="/admin/enrollments/<%= e.enrollment_id %>/delete" data-confirm="Delete this enrollment?"><button class="btn btn-danger btn-small" style="margin-top:5px">Delete</button></form></td></tr><% }) %>
+</tbody></table></div></div></section>
+<%- include('partials/footer') %>

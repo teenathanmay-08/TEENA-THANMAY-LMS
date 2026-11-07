@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<div class="form-card"><div class="eyebrow">Course management</div><h1><%= course?'Edit course':'Add a course' %></h1><p class="muted">Create a learning path and set its fee.</p>
+<form method="POST" action="<%= course?'/admin/courses/'+course.course_id+'/edit':'/admin/courses' %>">
+<div class="field"><label>Course title</label><input name="title" required value="<%= course?.title||'' %>" placeholder="e.g. Web Development"></div>
+<div class="field"><label>Description</label><textarea name="description" required placeholder="What will students learn?"><%= course?.description||'' %></textarea></div>
+<% if(user.role==='admin'){ %><div class="field"><label>Instructor</label><select name="instructor_id" required><% instructors.forEach(i=>{ %><option value="<%= i.user_id %>" <%= course?.instructor_id===i.user_id?'selected':'' %>><%= i.name %></option><% }) %></select></div><% } %>
+<div class="field"><label>Course fee (₹)</label><input type="number" name="price" min="0" step="0.01" required value="<%= course?.price??0 %>"></div>
+<div class="field"><label>Course image URL</label><input name="image_url" value="<%= course?.image_url||'' %>" placeholder="https://..."></div>
+<button class="btn"><%= course?'Save changes':'Create course' %></button> <a class="btn btn-light" href="/courses">Cancel</a></form>
+<img class="detail-image" style="height:130px;margin-top:20px" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900" alt="Learning online">
+</div><%- include('partials/footer') %>

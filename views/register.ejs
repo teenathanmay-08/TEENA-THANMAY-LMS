@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<div class="form-card"><div class="eyebrow">Join the academy</div><h1>Create your student account</h1><p class="muted">Register to explore courses and track your progress.</p>
+<form method="POST" action="/register">
+  <div class="field"><label>Full name</label><input name="name" required maxlength="100" placeholder="Enter your full name"></div>
+  <div class="field"><label>Email address</label><input type="email" name="email" required placeholder="you@example.com"></div>
+  <div class="field"><label>Password</label><input type="password" name="password" required minlength="8" placeholder="At least 8 characters"></div>
+  <button class="btn" style="width:100%">Create account →</button>
+</form><p class="muted">Already registered? <a style="color:var(--purple)" href="/login">Sign in</a></p>
+<img class="detail-image" style="height:140px;margin-top:10px" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80" alt="Students studying">
+</div>
+<%- include('partials/footer') %>
